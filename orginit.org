@@ -1,0 +1,52 @@
+* orginit.org
+** About
+   This is the Org file I use to configure Emacs for daily use. It (should)
+   contain every modification I've made and is what I use on a regular
+   basis.
+** Packages
+*** try
+    #+BEGIN_SRC emacs-lisp
+      (use-package try
+        :ensure t)
+    #+END_SRC
+*** which-key
+    #+BEGIN_SRC emacs-lisp
+      (use-package which-key
+        :ensure t
+        :config
+        (which-key-mode))
+    #+END_SRC
+** Org Packages
+*** org-bullets
+    #+BEGIN_SRC emacs-lisp
+      (use-package org-bullets
+        :ensure t
+        :config
+        (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+    #+END_SRC
+** Backup Management
+*** backups
+    Create backups regularly in the backup directory specified below.
+    #+BEGIN_SRC emacs-lisp
+      (setq backup-directory-alist '(("." . "~/.emacs.d/saves")))
+      (setq delete-old-versions t
+            kept-new-versions 8
+            kept-old-versions 8
+            version-control t)
+    #+END_SRC
+*** autosaves and lockfiles
+    Don't create autosave files and lock files, to reduce clutter.
+    #+BEGIN_SRC emacs-lisp
+      (setq auto-save-default nil)
+      (setq create-lockfiles nil)
+    #+END_SRC
+** Appearance
+*** menubar, toolbar, and scrollbar
+    Hide menubar, toolbar, and scrollbar.
+    #+BEGIN_SRC emacs-lisp
+      (menu-bar-mode -1)
+      (tool-bar-mode -1)
+      (scroll-bar-mode -1)
+    #+END_SRC
+    
+    #+END_SRC
