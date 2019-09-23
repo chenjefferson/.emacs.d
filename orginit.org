@@ -3,26 +3,179 @@
    This is the Org file I use to configure Emacs for daily use. It (should)
    contain every modification I've made and is what I use on a regular
    basis.
-** Packages
-*** try
+** Registers and Shortcuts
+*** registers
+    Set registers.
+    - c: config file
+    - t: Table
+    - g: GTD file
+    - G: GTD directory
+    - j: journal file
+    - l: library directory
+    - a: articles directory
+    - h: home directory
+    - d: downloads directory
+      #+BEGIN_SRC emacs-lisp
+       	(set-register ?c (cons 'file "~/.emacs.d/orginit.org"))
+       	(set-register ?t (cons 'file "~/Table/"))
+       	(set-register ?G (cons 'file "~/Table/GTD/"))
+       	(set-register ?g (cons 'file "~/Table/GTD/GTD.org"))
+       	(set-register ?j (cons 'file "~/Table/GTD/Journal.org"))
+       	(set-register ?l (cons 'file "~/Table/Library/"))
+       	(set-register ?a (cons 'file "~/Table/Library/Articles/"))
+       	(set-register ?h (cons 'file "~/"))
+       	(set-register ?d (cons 'file "~/Downloads/"))
+      #+END_SRC
+*** capture templates
+    Inbox and journal capture templates.
+    #+BEGIN_SRC emacs-lisp
+      (setq org-capture-templates
+            '(("i" "Inbox" entry (file+headline "~/Table/GTD/GTD.org" "Inbox")
+               "** %?\n")
+              ("j" "Journal" entry (file+datetree "~/Table/GTD/Journal.org")
+               "* Journal %T\n %?")
+              ("J" "Journal Template" entry (file+datetree "~/Table/GTD/Journal.org")
+               "* Journal %T\
+              \n** Gut Feeling\
+              \n   - score 1 - 10: %?\
+              \n   - what's on your mind: \
+              \n   - daily quote: \
+              \n** Read Self Beliefs\
+              \n** 3 Things You're Grateful For\
+              \n   - \
+              \n   - \
+              \n   - \
+              \n** 3 Things That Would Make Today Great\
+              \n   - \
+              \n   - \
+              \n   - \
+              \n** 3 Outstanding Things That Happened Yesterday\
+              \n   - \
+              \n   - \
+              \n   - \
+              \n** Thing at the Top of Your Mind Today\
+              \n   - \
+              \n** One Opportunity You Want to Go After\
+              \n   - \
+              \n** One Thing You're Really Proud or Amazed Of\
+              \n   - \
+              \n** Meditation / Mindfulness Reminder\
+              \n** Braindump\
+              \n   - \
+              \n")))
+    #+END_SRC
+*** org shortcuts
+    Use org capture anywhere, including for links.
+    #+BEGIN_SRC emacs-lisp
+      (global-set-key (kbd "C-c c") 'org-capture)
+      (global-set-key (kbd "C-c a") 'org)
+      (global-set-key (kbd "C-c l") 'org-store-link)
+    #+END_SRC
+** Package Management
+*** trying packages
+    Use try to try packages.
     #+BEGIN_SRC emacs-lisp
       (use-package try
         :ensure t)
     #+END_SRC
-*** which-key
+** Interface
+*** enabled commands
+    See below.
     #+BEGIN_SRC emacs-lisp
-      (use-package which-key
-        :ensure t
-        :config
-        (which-key-mode))
+      (put 'set-goal-column 'disabled nil)
     #+END_SRC
-** Org Packages
-*** org-bullets
+*** prompt styles
+    Use y-or-n instead of yes-or-no.
+    #+BEGIN_SRC emacs-lisp
+      (fset 'yes-or-no-p 'y-or-n-p)
+      (global-set-key (kbd "<f5>") 'revert-buffer)
+    #+END_SRC
+*** window navigation
+    Use ace-window.
+    #+BEGIN_SRC emacs-lisp
+      (use-package ace-window
+        :ensure t
+        :init
+        (progn
+          (global-set-key (kbd "M-o") 'ace-window)
+          (custom-set-faces
+           '(aw-leading-char-face
+             ((t (:inherit ace-jump-face-foreground :height 3.0)))))))
+    #+END_SRC
+*** line and cursor
+    Highlight the current line.
+    #+BEGIN_SRC emacs-lisp
+      (global-hl-line-mode t)
+    #+END_SRC
+*** themes
+    Use One theme.
+    #+BEGIN_SRC emacs-lisp
+      (use-package one-themes
+        :ensure t
+        :config (load-theme 'one-light t))
+    #+END_SRC
+*** org appearance
+    Use unicode bullets rather than '*'s to display org headers.
     #+BEGIN_SRC emacs-lisp
       (use-package org-bullets
         :ensure t
         :config
         (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+    #+END_SRC   
+*** menubar, toolbar, and scrollbar
+    Hide menubar, toolbar, and scrollbar.
+    #+BEGIN_SRC emacs-lisp
+      (menu-bar-mode -1)
+      (tool-bar-mode -1)
+      (scroll-bar-mode -1)
+    #+END_SRC
+*** startup message
+    Hide startup message.
+    #+BEGIN_SRC emacs-lisp
+      (setq inhibit-startup-message t)
+    #+END_SRC
+** General Editing
+*** autocompletion
+    Use helm for minibuffer completion.
+    #+BEGIN_SRC emacs-lisp
+      ;; ido mode config
+      ;; (setq ido-enable-flex-matching t)
+      ;; (setq ido-everywhere t)
+      ;; (ido-mode 1)
+
+      ;; helm config
+      ;; (use-package helm
+      ;;   :ensure t
+      ;;   :init
+      ;;   (require 'helm-config)
+      ;;   (global-set-key (kbd "M-x") #'helm-M-x)
+      ;;   (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
+      ;;   (global-set-key (kbd "C-x C-f") #'helm-find-files)
+      ;;   (helm-mode 1))
+    #+END_SRC
+    Use autocomplete for in-file completion.
+    #+BEGIN_SRC emacs-lisp
+      (use-package auto-complete
+        :ensure t
+        :init
+        (ac-config-default)
+        (global-auto-complete-mode t))
+    #+END_SRC
+*** undo tree
+    Use undo-tree to help visualize Emacs' undo system.
+    #+BEGIN_SRC emacs-lisp
+      (use-package undo-tree
+        :ensure t
+        :init
+        (global-undo-tree-mode))
+    #+END_SRC
+*** whitespace management
+    Delete all whitespace before cursor when pressing backspace.
+    #+BEGIN_SRC emacs-lisp
+      ;; (use-package hungry-delete
+      ;;   :ensure t
+      ;;   :config
+      ;;   (global-hungry-delete-mode))
     #+END_SRC
 ** Backup Management
 *** backups
@@ -34,19 +187,30 @@
             kept-old-versions 8
             version-control t)
     #+END_SRC
+    Use copy to make backups (more reliable).
+    #+BEGIN_SRC emacs-lisp
+      (setq backup-by-copying t)
+    #+END_SRC
 *** autosaves and lockfiles
     Don't create autosave files and lock files, to reduce clutter.
     #+BEGIN_SRC emacs-lisp
       (setq auto-save-default nil)
       (setq create-lockfiles nil)
     #+END_SRC
-** Appearance
-*** menubar, toolbar, and scrollbar
-    Hide menubar, toolbar, and scrollbar.
+** Dired
+*** trash management
+    Delete by moving into Trash.
     #+BEGIN_SRC emacs-lisp
-      (menu-bar-mode -1)
-      (tool-bar-mode -1)
-      (scroll-bar-mode -1)
+      (setq delete-by-moving-to-trash t)
     #+END_SRC
-    
+** Org Configuration
+*** agenda files
+    #+BEGIN_SRC emacs-lisp
+      (setq org-agenda-files "~/Table/GTD/GTD.org")
+    #+END_SRC
+*** refile depth
+    Set max depth to level 10.
+    #+BEGIN_SRC emacs-lisp
+      (setq org-refile-targets '((nil :maxlevel . 10)
+                                 (org-agenda-files :maxlevel . 10)))
     #+END_SRC
