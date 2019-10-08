@@ -17,6 +17,7 @@
     - d: downloads directory
       #+BEGIN_SRC emacs-lisp
        	(set-register ?c (cons 'file "~/.emacs.d/orginit.org"))
+       	(set-register ?C (cons 'file "~/.emacs.d/"))
        	(set-register ?t (cons 'file "~/Table/"))
        	(set-register ?G (cons 'file "~/Table/GTD/"))
        	(set-register ?g (cons 'file "~/Table/GTD/GTD.org"))
