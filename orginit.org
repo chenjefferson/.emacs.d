@@ -69,7 +69,7 @@
     Use org capture anywhere, including for links.
     #+BEGIN_SRC emacs-lisp
       (global-set-key (kbd "C-c c") 'org-capture)
-      (global-set-key (kbd "C-c a") 'org)
+      (global-set-key (kbd "C-c a") 'org-agenda)
       (global-set-key (kbd "C-c l") 'org-store-link)
     #+END_SRC
 ** Package Management
@@ -207,7 +207,7 @@
 ** Org Configuration
 *** agenda files
     #+BEGIN_SRC emacs-lisp
-      (setq org-agenda-files "~/Table/GTD/GTD.org")
+      (setq org-agenda-files '("~/Table/GTD/GTD.org"))
     #+END_SRC
 *** refile depth
     Set max depth to level 10.
