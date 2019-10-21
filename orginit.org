@@ -215,6 +215,13 @@
       (setq org-refile-targets '((nil :maxlevel . 10)
                                  (org-agenda-files :maxlevel . 10)))
     #+END_SRC
+*** custom commands
+    #+BEGIN_SRC emacs-lisp
+      (setq org-agenda-custom-commands
+            '(
+              ("f" "Focus" tags "@Focus")
+              ))                                         
+    #+END_SRC
 ** Magit Configuration
    - Install melpa.
      #+BEGIN_SRC emacs-lisp
