@@ -16,16 +16,16 @@
     - h: home directory
     - d: downloads directory
       #+BEGIN_SRC emacs-lisp
-       	(set-register ?c (cons 'file "~/.emacs.d/orginit.org"))
-       	(set-register ?C (cons 'file "~/.emacs.d/"))
-       	(set-register ?t (cons 'file "~/Table/"))
-       	(set-register ?G (cons 'file "~/Table/GTD/"))
-       	(set-register ?g (cons 'file "~/Table/GTD/GTD.org"))
-       	(set-register ?j (cons 'file "~/Table/GTD/Journal.org"))
-       	(set-register ?l (cons 'file "~/Table/Library/"))
-       	(set-register ?a (cons 'file "~/Table/Library/Articles/"))
-       	(set-register ?h (cons 'file "~/"))
-       	(set-register ?d (cons 'file "~/Downloads/"))
+        (set-register ?c (cons 'file "~/.emacs.d/orginit.org"))
+        (set-register ?C (cons 'file "~/.emacs.d/"))
+        (set-register ?t (cons 'file "~/Table/"))
+        (set-register ?G (cons 'file "~/Table/GTD/"))
+        (set-register ?g (cons 'file "~/Table/GTD/GTD.org"))
+        (set-register ?j (cons 'file "~/Table/GTD/Journal.org"))
+        (set-register ?l (cons 'file "~/Table/Library/"))
+        (set-register ?a (cons 'file "~/Table/Library/Articles/"))
+        (set-register ?h (cons 'file "~/Table/GTD/Habits/"))
+        (set-register ?d (cons 'file "~/Downloads/"))
       #+END_SRC
 *** capture templates
     Inbox and journal capture templates.
@@ -130,7 +130,7 @@
       (tool-bar-mode -1)
       (scroll-bar-mode -1)
     #+END_SRC
-*** startup message
+*** startup
     Hide startup message.
     #+BEGIN_SRC emacs-lisp
       (setq inhibit-startup-message t)
@@ -164,11 +164,12 @@
     #+END_SRC
 *** undo tree
     Use undo-tree to help visualize Emacs' undo system.
+    Commented out, as it doesn't seem to be in MELPA under this name.
     #+BEGIN_SRC emacs-lisp
-      (use-package undo-tree
-        :ensure t
-        :init
-        (global-undo-tree-mode))
+      ;; (use-package undo-tree
+      ;;   :ensure t
+      ;;   :init
+      ;;   (global-undo-tree-mode))
     #+END_SRC
 *** whitespace management
     Delete all whitespace before cursor when pressing backspace.
@@ -221,6 +222,13 @@
             '(
               ("f" "Focus" tags "@Focus")
               ))                                         
+    #+END_SRC
+** DocView Configuraiton
+*** resolution
+    Bump resolution.
+    #+BEGIN_SRC emacs-lisp
+      (require 'doc-view)
+      (setq doc-view-resolution 250)
     #+END_SRC
 ** Magit Configuration
    - Install melpa.
