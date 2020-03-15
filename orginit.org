@@ -22,6 +22,7 @@
         (set-register ?G (cons 'file "~/Table/GTD/"))
         (set-register ?g (cons 'file "~/Table/GTD/GTD.org"))
         (set-register ?j (cons 'file "~/Table/GTD/Journal.org"))
+        (set-register ?i (cons 'file "~/Table/GTD/Inbox.org"))
         (set-register ?l (cons 'file "~/Table/Library/"))
         (set-register ?a (cons 'file "~/Table/Library/Articles/"))
         (set-register ?h (cons 'file "~/Table/GTD/Habits/"))
@@ -33,6 +34,8 @@
       (setq org-capture-templates
             '(("i" "Inbox" entry (file+headline "~/Table/GTD/GTD.org" "Inbox")
                "** %?\n")
+              ("I" "Dated Inbox" entry (file+datetree "~/Table/GTD/Inbox.org")
+               "** Entry %T\n %?")
               ("j" "Journal" entry (file+datetree "~/Table/GTD/Journal.org")
                "* Journal %T\n %?")
               ("J" "Journal Template" entry (file+datetree "~/Table/GTD/Journal.org")
@@ -135,6 +138,11 @@
     #+BEGIN_SRC emacs-lisp
       (setq inhibit-startup-message t)
     #+END_SRC
+*** large file opening
+    Never ask when opening large files.
+    #+BEGIN_SRC emacs-lisp
+      (setq large-file-warning-threshold nil)
+    #+END_SRC
 ** General Editing
 *** autocompletion
     Use helm for minibuffer completion.
@@ -223,13 +231,27 @@
               ("f" "Focus" tags "@Focus")
               ))                                         
     #+END_SRC
-** DocView Configuraiton
+** Default Programs
+*** openwith
+    - Use openwith, to change the default programs to open files with.
+      #+BEGIN_SRC emacs-lisp
+        (use-package openwith
+           :ensure t
+           :init
+           (openwith-mode t)
+           (setq openwith-associations '(("\\.pdf\\'" "evince" (file)))))
+      #+END_SRC
+*** pdfs
+    - Open pdfs with Evince.
+      #+BEGIN_SRC 
+
+      #+END_SRC
 *** resolution
-    Bump resolution.
-    #+BEGIN_SRC emacs-lisp
-      (require 'doc-view)
-      (setq doc-view-resolution 250)
-    #+END_SRC
+    - Bump resolution.
+      #+BEGIN_SRC emacs-lisp
+        (require 'doc-view)
+        (setq doc-view-resolution 250)
+      #+END_SRC
 ** Magit Configuration
    - Install melpa.
      #+BEGIN_SRC emacs-lisp
