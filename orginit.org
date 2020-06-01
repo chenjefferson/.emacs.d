@@ -112,11 +112,11 @@
       (global-hl-line-mode t)
     #+END_SRC
 *** themes
-    Use One theme.
+    Use Monokai theme.
     #+BEGIN_SRC emacs-lisp
-      (use-package one-themes
+      (use-package monokai-theme
         :ensure t
-        :config (load-theme 'one-light t))
+        :config (load-theme 'monokai t))
     #+END_SRC
 *** org appearance
     Use unicode bullets rather than '*'s to display org headers.
