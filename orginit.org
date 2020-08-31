@@ -27,6 +27,7 @@
         (set-register ?a (cons 'file "~/Table/Library/Articles/"))
         (set-register ?h (cons 'file "~/Table/GTD/Habits/"))
         (set-register ?d (cons 'file "~/Downloads/"))
+        (set-register ?m (cons 'file "~/Table/GTD/Mise/"))
       #+END_SRC
 *** capture templates
     Inbox and journal capture templates.
